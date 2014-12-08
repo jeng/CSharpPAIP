@@ -55,7 +55,7 @@ public static class RandomSentenceGrammar
             if (rule.IsList())
                 return Generate(rule);
             else
-                return Generate(Grammar[first].Values.OneOf());
+                return Generate(rule.Values.OneOf());
         }
         else
             return new List<string>(){first};
