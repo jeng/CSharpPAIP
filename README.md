@@ -12,5 +12,6 @@ just how extensible the language is.
 
 - Chapter 1 is an overview of Lisp.  I'll be skipping that one.
 - Chapter 2 is a simple lisp program.  Generate random English sentences 
+- Chapter 3 all about lisp, mainly skipping this one.
 
 

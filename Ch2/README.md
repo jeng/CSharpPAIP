@@ -20,9 +20,7 @@ Second Version
 We have a few different options when it comes to parsing the grammar:
 
 - Regex
-
 - Lexer 
-
 - Dict with a string for the left side and a object that can represent the list
   of words or rule list on the right.
 
