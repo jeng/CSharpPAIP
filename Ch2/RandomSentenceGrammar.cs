@@ -111,7 +111,7 @@ public static class RandomSentenceGrammar
 
     public static List<string> Generate(Rule phrase) 
     {
-        Print(phrase); 
+        //Print(phrase); 
         if (phrase.Children != null)
             return Generate(Rewrite(phrase.Children.OneOf(), Grammar));
         else if (phrase.Sibling != null)
