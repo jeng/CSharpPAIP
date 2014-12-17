@@ -7,36 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class Rule
-{
-    public List<Rule> Children { get; set; }
-    public List<Rule> Sibling { get; set; }
-    public string Value { get; set;}
-    public override string ToString()
-    {
-        string siblings = (Sibling == null)  ? "" : String.Join(" ", Sibling.Select(x => x.Value));
-        string children = (Children == null) ? "" : String.Join(" ", Children.Select(x => x.Value));
-        return String.Format("Name: {0}\nSiblings: {1}\nChildren: {2}\n", 
-                Value, siblings, children);
-    }
-    public Rule()
-    {
-        this.Value = "";
-    }
-}
-
-
 public static class RandomSentenceGrammar
 {
-    public static readonly Dictionary<string, Rule> SimpleGrammar = new Dictionary<string, Rule>()
-    {
-        {"sentence",    new Rule(){Sibling=RuleList("noun-phrase", "verb-phrase")}},
-        {"noun-phrase", new Rule(){Sibling=RuleList("Article", "Noun")}},
-        {"verb-phrase", new Rule(){Sibling=RuleList("Verb", "noun-phrase")}},
-        {"Article",     new Rule(){Children=RuleList("the", "a")}},
-        {"Noun",        new Rule(){Children=RuleList("man", "ball", "woman", "table")}},
-        {"Verb",        new Rule(){Children=RuleList("hit", "took", "saw", "liked")}}
-    };
+    public static readonly string SimpleGrammar = @"
+        sentence     => (noun-phrase verb-phrase);
+        noun-phrase  => (Article Noun);
+        verb-phrase  => (Verb noun-phrase);
+        Article      => the a;
+        Noun         => man ball woman table;
+        Verb         => hit took saw liked;";
+ 
 
     public static readonly Dictionary<string, Rule> BiggerGrammar = new Dictionary<string, Rule>()
     {
@@ -84,14 +64,14 @@ public static class RandomSentenceGrammar
     };
 
 
-    public static readonly Dictionary<string, Rule> Grammar = BiggerGrammar;//SimpleGrammar;
+    public static Dictionary<string, Rule> Grammar;
 
     public static void Print(object o)
     {
         Console.WriteLine(o);
     }
 
-    public static List<Rule> RuleList(params string [] tokens)
+     public static List<Rule> RuleList(params string [] tokens)
     {
         List<Rule> result = new List<Rule>();
         foreach(var s in tokens)
@@ -101,7 +81,7 @@ public static class RandomSentenceGrammar
         return result;
     }
 
-    public static Rule Rewrite(Rule key, Dictionary<string, Rule> grammar)
+   public static Rule Rewrite(Rule key, Dictionary<string, Rule> grammar)
     {
         if(grammar.ContainsKey(key.Value))
             return grammar[key.Value];
@@ -130,6 +110,9 @@ public static class RandomSentenceGrammar
     public static void Main(string [] args)
     {
         Regex re = new Regex(@"\s+");
-        Print(re.Replace(String.Join(" ", Generate("sentence")), " "));
+        GrammarParser gp = new GrammarParser(SimpleGrammar);
+        Grammar = gp.Grammar;
+        for(int i = 0; i < 100; i++)
+            Print(re.Replace(String.Join(" ", Generate("sentence")), " "));
     }
 }

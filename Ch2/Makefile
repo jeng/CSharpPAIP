@@ -6,7 +6,7 @@ RandomSentenceOne:
 	$(CC) RandomSentenceOne.cs SimpleGrammar.cs RandomSingleton.cs ListExtensions.cs
 
 RandomSentenceGrammar:
-	$(CC) RandomSentenceGrammar.cs RandomSingleton.cs ListExtensions.cs
+	$(CC) RandomSentenceGrammar.cs RandomSingleton.cs ListExtensions.cs Rule.cs GrammarParser.cs
 
 clean:
 	rm *.exe
