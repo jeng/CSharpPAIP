@@ -45,3 +45,39 @@ of the code can be simplified.
 We can switch the grammar out which is one of the goals of being data driven.
 The grammars are not the easiest thing to read or write though.
 
+Fourth Version
+--------------
+
+Specifying the grammar was ugly, that was bothering me.  I didn't want to get
+into parsing s-expressions the early but I did anyway.  A recursive decent
+parser was added so the grammar can be specified in a format similar to the
+book.
+
+    sentence     => (noun-phrase verb-phrase);
+    noun-phrase  => (Article Adj* Noun PP*) (Name) (Pronoun);
+    verb-phrase  => (Verb noun-phrase PP*);
+    PP*          => () (PP PP*);
+    Adj*         => () (Adj Adj*);
+    PP           => (Prep noun-phrase);
+    Prep         => to in by with on;
+    Adj          => big little blue green adiabatic;
+    Article      => the a;
+    Name         => Pat Kim Lee Terry Robin;
+    Noun         => man ball woman table;
+    Verb         => hit took saw liked;
+    Pronoun      => he she it these those that;";
+
+This the EBNF I sketched out:
+
+    rule       = key,[space],'=>',[space],phrase,endl
+    phrase     = token_list|sexp_list
+    space      = '\s\t\n\r'
+    endl       = ';'
+    sexp_list  = sexp,[space],{sexp}
+    sexp       = '(' token_list ')'
+    token_list = token,[space],{token}
+    token      = alphanum|special, {alphnum|special}
+    alphanum   = a-z|A-Z|0-9
+    special    = '*'|'_'|'-'
+    key        = token
+
