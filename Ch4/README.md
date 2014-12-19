@@ -19,6 +19,6 @@ Linq has a match for the functions listed in figure 4.1 pg 114:
 predicate when `member` is needed.
 
 This program ported over nicely.  C# makes it more difficult to build up static
-data in the programs (code as data).  In today environments people just
+data in the programs (code as data).  In today's environments people just
 deserialize json or xml.  Instead of taking a similar route, since I wanted to
 stay close to the book, I added a wrapper to make list creation less verbose.
