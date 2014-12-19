@@ -12,7 +12,7 @@ Things to note, new List...Concat...ToList is a lot longer than append.  I
 thought about adding another extension method but didn't want to spend the
 whole project trying to cover warts.
 
-Another important point is we are even further from the Kleene star notation
+Another important point, we are even further from the Kleene star notation
 then the lisp example.  It is definitely harder to read. 
 
 Second Version
@@ -49,7 +49,7 @@ Fourth Version
 --------------
 
 Specifying the grammar was ugly, that was bothering me.  I didn't want to get
-into parsing s-expressions the early but I did anyway.  A recursive decent
+into parsing s-expressions this early but I did anyway.  A recursive decent
 parser was added so the grammar can be specified in a format similar to the
 book.
 
