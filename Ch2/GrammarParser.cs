@@ -51,8 +51,14 @@ public class GrammarParser
         parse();
     }
 
-    private string pop(Regex re, bool required=true)
+    private void removeSpace()
     {
+        data = reSpace.Replace(data, "", 1);
+    }
+
+    private string pop(Regex re) 
+    {
+        removeSpace();
         var m = re.Match(data);
         if (m.Success)
         {
@@ -61,36 +67,20 @@ public class GrammarParser
         }
         else
         {
-            if (required)
-                throw new Exception("Could not pop value at: " + 
+            throw new Exception("Could not pop value at: " + 
                         data.Substring(0, Math.Min(10, data.Length)));
-            return "";
         }
     }
 
-    private void skipspace()
+    private string token()
     {
-        pop(reSpace, required:false);
+        return pop(reToken);
     }
 
-    private string token(bool required=true)
+    private bool topIs(Regex re)
     {
-        return pop(reToken, required:required);
-    }
-
-    private bool isEndLn()
-    {
-        return reSemi.IsMatch(data);
-    }
-
-    private bool isRparen()
-    {
-        return reRparen.IsMatch(data);
-    }
-
-    private bool isLparen()
-    {
-        return reLparen.IsMatch(data);
+        removeSpace();
+        return re.IsMatch(data);
     }
 
     private List<string> sexp()
@@ -104,29 +94,23 @@ public class GrammarParser
     private List<List<string>> sexpList()
     {
         var sexpLs = new List<List<string>>();
-        while(!isEndLn() && data.Length > 0)
-        {
+        while(!topIs(reSemi) && data.Length > 0)
             sexpLs.Add(sexp());
-            skipspace();
-        }
         return sexpLs;
     }
 
     private List<string> tokenList()
     {
         var sl = new List<string>();
-        while(!isEndLn() && !isRparen() && data.Length > 0)
-        {
+        while(!topIs(reSemi) && !topIs(reRparen) && data.Length > 0)
             sl.Add(token());
-            skipspace();
-        }
         return sl;
     }
 
     //Use tuple as a substitute for multiple value bind
     private Tuple<ListType, List<List<string>>> phrase()
     {
-        if (isLparen())
+        if (topIs(reLparen))
             return new Tuple<ListType, List<List<string>>>
                 (ListType.SEXP_LIST, sexpList());
         else
@@ -138,9 +122,7 @@ public class GrammarParser
     {
         List<Rule> result = new List<Rule>();
         foreach(var s in tokens)
-        {
             result.Add(new Rule(){Value=s});
-        }
         return result;
     }
 
@@ -148,25 +130,12 @@ public class GrammarParser
     {
         while(data.Length > 0)
         {
-            skipspace(); 
-            //System.Console.WriteLine("Data: " + data);
             string key = token();
-            skipspace(); 
+
             pop(reArrow);
-            skipspace(); 
             var parsedValue = phrase();
-            skipspace();
             pop(reSemi);
-            skipspace();
-            /* test output
-               string val ="";
-               foreach(var sl in parsedValue.Item2)
-               {
-               val += String.Join("|", sl);
-               val += "&";
-               }
-               System.Console.WriteLine(String.Format("key: {0}, val: {1}", key, val));
-               */
+
             if (parsedValue.Item1 == ListType.FLAT_LIST)
             {
                 Grammar[key] = new Rule(){ Children=RuleList(parsedValue.Item2[0]) };
