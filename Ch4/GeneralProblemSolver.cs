@@ -49,7 +49,7 @@ public static class GeneralProblemSolver
             Action   = "give-shop-money",
             Preconds = sl("have-money"),
             AddList  = sl("shop-has-money"),
-            DelList  = sl("has-money")}
+            DelList  = sl("have-money")}
     };
 
     public static void IsSolved(bool b)
@@ -78,6 +78,14 @@ public static class GeneralProblemSolver
         gps = new GPS(
                 sl("son-at-home", "car-works"),
                 sl("son-at-school"),
+                schoolOps);
+        IsSolved(gps.Solve());
+        Print("");
+
+        //Clobbered sibling goal problem
+        gps = new GPS(
+                sl("son-at-home", "car-needs-battery", "have-money", "have-phone-book"),
+                sl("have-money", "son-at-school"),
                 schoolOps);
         IsSolved(gps.Solve());
         Print("");

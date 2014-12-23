@@ -32,13 +32,23 @@ public class GPS
     
     public bool Solve()
     {
-        return goals.All(Achieve);
+        return AchieveAll(goals);
     }
 
     private bool Achieve(string goal)
     {
         return state.Any(x => x == goal) || 
                ops.Where(x => IsAppropriate(goal, x)).Any(ApplyOp);
+    }
+
+    private bool IsSubset(List<string> sub, List<string> set)
+    {
+        return !sub.Except(set).Any();
+    }
+
+    private bool AchieveAll(List<string> goals)
+    {
+        return goals.All(Achieve) && IsSubset(goals, this.state);
     }
 
     private bool IsAppropriate(string goal, Op op)
@@ -48,9 +58,9 @@ public class GPS
 
     private bool ApplyOp(Op op)
     {
-        if (op.Preconds.All(Achieve))
+        if (AchieveAll(op.Preconds))
         {
-            output(string.Format("Executing {0}", op.Action));
+            output(string.Format("Executing: {0}", op.Action));
             state = state.Except(op.DelList).ToList();
             state = state.Union(op.AddList).ToList();
             return true;
