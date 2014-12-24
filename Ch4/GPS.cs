@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class GPS
 {
@@ -40,6 +41,7 @@ public class GPS
 
     private bool Achieve(string goal)
     {
+        Trace.WriteLine(string.Format("Trying to achieve goal: {0}", goal));
         if (history.ContainsKey(goal))
             return false;
 

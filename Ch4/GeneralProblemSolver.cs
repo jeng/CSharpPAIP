@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public static class GeneralProblemSolver
 {
@@ -67,6 +68,8 @@ public static class GeneralProblemSolver
     }
     public static int Main(string [] args)
     {
+        Trace.Listeners.Add(new ConsoleTraceListener()); 
+
         var gps = new GPS(
                 sl("son-at-home", "car-needs-battery", "have-money", "have-phone-book"),
                 sl("son-at-school"),
