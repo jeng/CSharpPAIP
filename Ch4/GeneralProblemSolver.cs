@@ -49,7 +49,13 @@ public static class GeneralProblemSolver
             Action   = "give-shop-money",
             Preconds = sl("have-money"),
             AddList  = sl("shop-has-money"),
-            DelList  = sl("have-money")}
+            DelList  = sl("have-money")},
+        new Op(){
+            Action   = "ask-phone-number",
+            Preconds = sl("in-communication-with-shop"),
+            AddList  = sl("know-phone-number"),
+            DelList  = sl()}
+
     };
 
     public static void IsSolved(bool b)
@@ -89,6 +95,15 @@ public static class GeneralProblemSolver
                 schoolOps);
         IsSolved(gps.Solve());
         Print("");
+
+        //Recursive subgoal problem
+        gps = new GPS(
+                sl("son-at-home", "car-needs-battery", "have-money"),
+                sl("son-at-school"),
+                schoolOps);
+        IsSolved(gps.Solve());
+        Print("");
+
 
         return 0;
     }

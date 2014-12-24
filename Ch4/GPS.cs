@@ -19,6 +19,8 @@ public class GPS
 
     private Action<string> output;
 
+    private Dictionary<string, int> history;
+
     //Make this explicit versus using the properties when 
     //creating an instance
     public GPS(List<string> state, List<string> goals, List<Op> ops)
@@ -32,11 +34,17 @@ public class GPS
     
     public bool Solve()
     {
+        history = new Dictionary<string, int>();
         return AchieveAll(goals);
     }
 
     private bool Achieve(string goal)
     {
+        if (history.ContainsKey(goal))
+            return false;
+
+        history[goal] = 0;
+
         return state.Any(x => x == goal) || 
                ops.Where(x => IsAppropriate(goal, x)).Any(ApplyOp);
     }
