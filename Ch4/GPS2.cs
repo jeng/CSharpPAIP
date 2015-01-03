@@ -12,15 +12,11 @@ public class GPS
     //A list of available operators
     private List<Op> ops;
 
-    //Make this explicit versus using the properties when 
-    //creating an instance
     public GPS(List<Op> ops)
     {
         this.ops = ops;
     }
    
-    //The book passes in a state.  I'm not sure why we would need to do that.  We
-    //can just create a new list each time with the start state
     public List<OpAction> Solve(List<OpAction> state, List<OpAction> goals)
     {
         //Push a start onto the state to handle null list
