@@ -13,14 +13,7 @@ public static class GeneralProblemSolver
     {
         Console.WriteLine(o);
     }
-    public static void Print(string s)
-    {
-        Console.WriteLine(s);
-    }
 
-
-    //Return a new OpAction list. If executing is true, the first
-    //element will have the executing state set.
     public static List<OpAction> oal(params string [] elems)
     {
         var ol = new List<OpAction>();

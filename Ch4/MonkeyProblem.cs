@@ -1,6 +1,6 @@
 // Example program chapter 4.12 of PAIP by Peter Norvig.
 //
-// Ported to C# by Jeremy English Sat Jan  3 17:05:23 CST 2015 
+// Ported to C# by Jeremy English Sun Jan  4 16:52:44 CST 2015
 
 using System;
 using System.Linq;
@@ -14,13 +14,6 @@ public static class GeneralProblemSolver
         Console.WriteLine(o);
     }
 
-    public static void Print(string s)
-    {
-        Console.WriteLine(s);
-    }
-
-    //Return a new OpAction list. If executing is true, the first
-    //element will have the executing state set.
     public static List<OpAction> oal(params string [] elems)
     {
         var ol = new List<OpAction>();
