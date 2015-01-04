@@ -12,4 +12,11 @@ public class Op
     public List<OpAction> Preconds { get; set; }
     public List<OpAction> AddList { get; set; }
     public List<OpAction> DelList { get; set; }
+
+    public override string ToString()
+    {
+        return String.Format("Action: {0}\nPrecond:\n{1}\nAddList:\n{2}\nDelList:\n{3}", 
+                Action, String.Join("\n", Preconds), String.Join("\n", AddList), 
+                String.Join("\n", DelList));
+    }
 }

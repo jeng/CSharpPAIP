@@ -9,9 +9,9 @@ using System.Diagnostics;
 
 public static class GeneralProblemSolver
 {
-    public static void Print(OpAction oa)
+    public static void Print(Object o)
     {
-        Console.WriteLine(String.Format("{0}: {1}", oa.State.ToString(), oa.Name));
+        Console.WriteLine(o);
     }
     public static void Print(string s)
     {
@@ -114,6 +114,13 @@ public static class GeneralProblemSolver
                 oal("son-at-home", "car-needs-battery", "have-money"),
                 oal("son-at-school")));
         Print("");
+
+        //Trivial
+        PrintSolution(gps.Solve(
+                oal("son-at-school"),
+                oal("son-at-school")));
+        Print("");
+
 
         return 0;
     }

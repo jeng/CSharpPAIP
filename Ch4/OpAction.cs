@@ -11,6 +11,10 @@ public class OpAction
     public string Name { get; set; }
     public ActionState State { get; set; }
 
+    public override string ToString()
+    {
+        return String.Format("{0}{1}{2}", State, (Name.Trim().Length > 0) ? ":" : "", Name);
+    }
 
     public override bool Equals(System.Object obj)
     {
