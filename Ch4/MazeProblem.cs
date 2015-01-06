@@ -1,6 +1,6 @@
 // Example program chapter 4.13 of PAIP by Peter Norvig.
 //
-// Ported to C# by Jeremy English Sun Jan  4 16:52:44 CST 2015
+// Ported to C# by Jeremy English Tue Jan  6 06:28:06 CST 2015
 
 using System;
 using System.Linq;
