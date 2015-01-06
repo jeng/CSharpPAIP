@@ -13,6 +13,10 @@ GeneralProblemSolverV2:
 MonkeyProblem:
 	$(CC) $(CFLAGS) MonkeyProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
 
+MazeProblem:
+	$(CC) $(CFLAGS) MazeProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+
+
 .PHONY: clean
 clean:
 	rm *.exe
