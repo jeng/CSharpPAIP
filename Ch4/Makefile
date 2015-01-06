@@ -2,21 +2,23 @@
 #> make CFLAGS='-d:TRACE'
 CC = dmcs 
 
-all: GeneralProblemSolver GeneralProblemSolverV2 MonkeyProblem
+exes = GeneralProblemSolver.exe GeneralProblemSolverV2.exe MonkeyProblem.exe MazeProblem.exe
 
-GeneralProblemSolver:
+all: $(exes)
+
+GeneralProblemSolver.exe:
 	$(CC) $(CFLAGS) GeneralProblemSolver.cs GPS.cs Op.cs
 
-GeneralProblemSolverV2:
-	$(CC) $(CFLAGS) GeneralProblemSolver2.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs -out:$@.exe
+GeneralProblemSolverV2.exe:
+	$(CC) $(CFLAGS) GeneralProblemSolver2.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs -out:$@
 
-MonkeyProblem:
+MonkeyProblem.exe:
 	$(CC) $(CFLAGS) MonkeyProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
 
-MazeProblem:
+MazeProblem.exe:
 	$(CC) $(CFLAGS) MazeProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
 
 
 .PHONY: clean
 clean:
-	rm *.exe
+	rm $(exes)
