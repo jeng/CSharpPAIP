@@ -17,6 +17,7 @@ Linq has a match for the functions listed in figure 4.1 pg 114:
 |subsetp       |!Except.Any|
 |remove-if     |RemoveAll  |
 |append        |AddRange   |
+|mappend       |SelectMany |
 
 `Any` can be used for both `member` and `some` by wrapping the element in a
 predicate when `member` is needed.
