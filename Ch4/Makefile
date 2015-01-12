@@ -2,21 +2,29 @@
 #> make CFLAGS='-d:TRACE'
 CC = dmcs 
 
-exes = GeneralProblemSolver.exe GeneralProblemSolverV2.exe MonkeyProblem.exe MazeProblem.exe
+exes = GeneralProblemSolver.exe GeneralProblemSolverV2.exe \
+	   MonkeyProblem.exe MazeProblem.exe StackPermute.exe \
+	   Permute.exe
 
 all: $(exes)
 
-GeneralProblemSolver.exe:
-	$(CC) $(CFLAGS) GeneralProblemSolver.cs GPS.cs Op.cs
+GeneralProblemSolver.exe: GeneralProblemSolver.cs GPS.cs Op.cs
+	$(CC) $(CFLAGS) $?
 
-GeneralProblemSolverV2.exe:
-	$(CC) $(CFLAGS) GeneralProblemSolver2.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs -out:$@
+GeneralProblemSolverV2.exe: GeneralProblemSolver2.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs 
+	$(CC) $(CFLAGS) $? -out:$@
 
-MonkeyProblem.exe:
-	$(CC) $(CFLAGS) MonkeyProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+MonkeyProblem.exe: MonkeyProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+	$(CC) $(CFLAGS) $?
 
-MazeProblem.exe:
-	$(CC) $(CFLAGS) MazeProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+MazeProblem.exe: MazeProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+	$(CC) $(CFLAGS) $? 
+
+StackPermute.exe: StackPermute.cs
+	$(CC) $(CFLAGS) $?
+
+Permute.exe: Permute.cs
+	$(CC) $(CFLAGS) $?
 
 
 .PHONY: clean
