@@ -45,12 +45,11 @@ public static class StackPermute
     }
 
     
-    public static void Main()
+    public static void Main(string [] argv)
     {
-        //Dump(Permute("a"));
-        //Dump(Permute("abc", "123", "you", "me"));
-        //Dump(Permute(1,2,3,4,5));
-        Dump(Permute("John", "Rob", "Peter", "Don", "Alan", "Doug", "Ivan", "Adele"));
-        //Dump(Permute("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
+        if (argv.Length > 0)
+            Dump(Permute(argv));
+        else
+            Dump(Permute("John", "Rob", "Peter", "Don", "Alan", "Doug", "Ivan", "Adele"));
     }
 }

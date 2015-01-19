@@ -66,3 +66,22 @@ first none nil result:
     CL-USER> (some #'(lambda (x) x) '(nil 2 nil 4 5))
     2
 
+Exercises
+---------
+
+I added three versions of the permutation program: recursive, iterative and one in C.  The running time for the two C# programs is similar. Also, both of them fail at 11 items.  Not surprising since they are trying to store 39,916,800 objects in memory. 
+
+    % time ./StackPermute.exe one two three four five six seven eight nine ten > /dev/null
+    67.07s user 7.95s system 99% cpu 1:15.24 total
+
+    % time ./Permute.exe one two three four five six seven eight nine ten > /dev/null
+    53.35s user 8.26s system 99% cpu 1:01.82 total
+
+    % time ./permute one two three four five six seven eight nine ten > /dev/null 
+    15.21s user 0.01s system 99% cpu 15.242 total
+
+The C version has some optimizations that could be added to the C# versions.  It outputs the result when found, instead of storing all of them and returning.  It also permutes the indexes of a look up table.  This keeps it from have multiple copies of the objects in memory.
+
+    % time ./permute one two three four five six seven eight nine ten eleven > /dev/null
+    189.46s user 0.10s system 99% cpu 3:09.82 total
+
