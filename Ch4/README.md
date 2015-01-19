@@ -80,7 +80,7 @@ I added three versions of the permutation program: recursive, iterative and one 
     % time ./permute one two three four five six seven eight nine ten > /dev/null 
     15.21s user 0.01s system 99% cpu 15.242 total
 
-The C version has some optimizations that could be added to the C# versions.  It outputs the result when found, instead of storing all of them and returning.  It also permutes the indexes of a look up table.  This keeps it from have multiple copies of the objects in memory.
+The C version has some optimizations that could be added to the C# versions.  It outputs the result when found, instead of storing all of them and returning.  It also permutes the indexes of a look up table.  This keeps it from having multiple copies of the objects in memory.
 
     % time ./permute one two three four five six seven eight nine ten eleven > /dev/null
     189.46s user 0.10s system 99% cpu 3:09.82 total
