@@ -126,6 +126,14 @@ public static class GeneralProblemSolver
                     oal("a on b", "b on c", "c on table", "space on a", "space on table"),
                     oal("b on a", "c on b")));
 
+        Print("");
+
+        blockWorld = MakeOp("a", "b", "c");
+        gps = new GPS(blockWorld.Select(ConvertOp).ToList());
+        PrintSolution(gps.Solve(
+                    oal("a on b", "b on c", "c on table", "space on a", "space on table"),
+                    oal("c on b", "b on a")));
+
         return 0;
     }
 }

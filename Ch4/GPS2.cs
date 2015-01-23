@@ -46,6 +46,19 @@ public class GPS
         return null;
     }
 
+    private List<OpAction> Some(Func<List<OpAction>, List<OpAction>> predicate, 
+            List<List<OpAction>> operators)
+    {
+        foreach(var op in operators)
+        {       
+            var result = predicate(op);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+
     private List<OpAction> Achieve(List<OpAction> state, OpAction goal, List<OpAction> goalStack)
     {
         TraceIndent(string.Format("Trying to achieve goal: {0}", goal.Name), goalStack.Count());
@@ -64,8 +77,14 @@ public class GPS
         return !sub.Except(set).Any();
     }
 
-    //Returns null when they cannot be achieved
     private List<OpAction> AchieveAll(List<OpAction> state, List<OpAction> goals, List<OpAction> goalStack)
+    {
+        return Some((newgoals => AchieveEach(state, newgoals, goalStack)),
+                Orderings(goals));
+    }
+
+    //Returns null when they cannot be achieved
+    private List<OpAction> AchieveEach(List<OpAction> state, List<OpAction> goals, List<OpAction> goalStack)
     {
         List<OpAction> currentState = new List<OpAction>(state);
         Func<OpAction, bool> AchieveClosure = 
@@ -79,6 +98,22 @@ public class GPS
             return currentState;
         else
             return null;
+    }
+
+    private List<List<OpAction>> Orderings(List<OpAction> lop)
+    {
+        if (lop.Count > 1)
+        {
+            var reverse = new List<OpAction>(lop);
+            reverse.Reverse();
+            return new List<List<OpAction>>(){
+                new List<OpAction>(lop), reverse};
+        }
+        else
+        {
+            return new List<List<OpAction>>(){
+                new List<OpAction>(lop)};
+        }
     }
 
     private bool IsAppropriate(OpAction goal, Op op)
