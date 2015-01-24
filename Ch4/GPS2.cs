@@ -35,7 +35,7 @@ public class GPS
             return null;
     }
 
-    private List<OpAction> Some(Func<Op, List<OpAction>> predicate, List<Op> operators)
+    private T Some<T, U>(Func<U, T> predicate, List<U> operators) where U : class where T : class
     {
         foreach(var op in operators)
         {       
@@ -45,19 +45,6 @@ public class GPS
         }
         return null;
     }
-
-    private List<OpAction> Some(Func<List<OpAction>, List<OpAction>> predicate, 
-            List<List<OpAction>> operators)
-    {
-        foreach(var op in operators)
-        {       
-            var result = predicate(op);
-            if (result != null)
-                return result;
-        }
-        return null;
-    }
-
 
     private List<OpAction> Achieve(List<OpAction> state, OpAction goal, List<OpAction> goalStack)
     {
