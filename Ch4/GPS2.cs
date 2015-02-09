@@ -35,17 +35,6 @@ public class GPS
             return null;
     }
 
-    private T Some<T, U>(Func<U, T> predicate, List<U> operators) where U : class where T : class
-    {
-        foreach(var op in operators)
-        {       
-            var result = predicate(op);
-            if (result != null)
-                return result;
-        }
-        return null;
-    }
-
     private List<OpAction> Achieve(List<OpAction> state, OpAction goal, List<OpAction> goalStack)
     {
         TraceIndent(string.Format("Trying to achieve goal: {0}", goal.Name), goalStack.Count());
@@ -55,8 +44,15 @@ public class GPS
         else if (goalStack.Any(x => x == goal))
             return null;
         else
-            return Some((op => ApplyOp(state, goal, op, goalStack)),
-                    ops.Where(x => IsAppropriate(goal, x)).ToList());
+            return AppropriateOps(goal, state).Some(op => ApplyOp(state, goal, op, goalStack));
+    }
+
+    //Return a list of appropriate operations sorted by the number of unfulfilled preconditions
+    private List<Op> AppropriateOps(OpAction goal, List<OpAction> state) 
+    {
+       return this.ops.Where(op => IsAppropriate(goal, op))
+           .OrderBy(op => op.Preconds.CountIf(precond => !state.Any(s => s == precond)))
+           .ToList();
     }
 
     private bool IsSubset(List<OpAction> sub, List<OpAction> set)
@@ -66,8 +62,7 @@ public class GPS
 
     private List<OpAction> AchieveAll(List<OpAction> state, List<OpAction> goals, List<OpAction> goalStack)
     {
-        return Some((newgoals => AchieveEach(state, newgoals, goalStack)),
-                Orderings(goals));
+        return Orderings(goals).Some(newgoals => AchieveEach(state, newgoals, goalStack));
     }
 
     //Returns null when they cannot be achieved

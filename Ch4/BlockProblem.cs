@@ -102,34 +102,47 @@ public static class GeneralProblemSolver
         else
             foreach(var s in solution)
                 Print(s);
+        Print("");
     }
 
     public static int Main(string [] args)
     {
         Trace.Listeners.Add(new ConsoleTraceListener()); 
-        MakeOp("a", "b", "c");
         var blockWorld = MakeOp("a", "b");
         var gps = new GPS(blockWorld.Select(ConvertOp).ToList());
         PrintSolution(gps.Solve(
                     oal("a on table", "b on table", "space on a", "space on b"),
                     oal("a on b", "b on table")));
-        Print("");
 
         PrintSolution(gps.Solve(
                     oal("a on b", "b on table", "space on a", "space on table"),
                     oal("b on a")));
-        Print("");
 
         blockWorld = MakeOp("a", "b", "c");
         gps = new GPS(blockWorld.Select(ConvertOp).ToList());
+
         PrintSolution(gps.Solve(
                     oal("a on b", "b on c", "c on table", "space on a", "space on table"),
                     oal("b on a", "c on b")));
 
-        Print("");
+        PrintSolution(gps.Solve(
+                    oal("a on b", "b on c", "c on table", "space on a", "space on table"),
+                    oal("c on b", "b on a")));
 
-        blockWorld = MakeOp("a", "b", "c");
-        gps = new GPS(blockWorld.Select(ConvertOp).ToList());
+        //This should happen in one step
+        PrintSolution(gps.Solve(
+                    oal("c on a", "a on table", "b on table", "space on c", "space on b", "space on table"),
+                    oal("c on table")));
+        
+        //Should only take two steps
+        PrintSolution(gps.Solve(
+                    oal("c on a", "a on table", "b on table", "space on c", "space on b", "space on table"),
+                    oal("c on table", "a on b")));
+
+        PrintSolution(gps.Solve(
+                    oal("a on b", "b on c", "c on table", "space on a", "space on table"),
+                    oal("b on a", "c on b")));
+
         PrintSolution(gps.Solve(
                     oal("a on b", "b on c", "c on table", "space on a", "space on table"),
                     oal("c on b", "b on a")));

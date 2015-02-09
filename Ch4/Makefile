@@ -11,13 +11,13 @@ all: $(exes)
 GeneralProblemSolver.exe: GeneralProblemSolver.cs GPS.cs Op.cs
 	$(CC) $(CFLAGS) $^
 
-GeneralProblemSolverV2.exe: GeneralProblemSolver2.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs 
+GeneralProblemSolverV2.exe: GeneralProblemSolver2.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs CLExt.cs
 	$(CC) $(CFLAGS) $^ -out:$@
 
-MonkeyProblem.exe: MonkeyProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+MonkeyProblem.exe: MonkeyProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs CLExt.cs
 	$(CC) $(CFLAGS) $^
 
-MazeProblem.exe: MazeProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+MazeProblem.exe: MazeProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs CLExt.cs
 	$(CC) $(CFLAGS) $^ 
 
 StackPermute.exe: StackPermute.cs
@@ -26,7 +26,7 @@ StackPermute.exe: StackPermute.cs
 Permute.exe: Permute.cs
 	$(CC) $(CFLAGS) $^
 
-BlockProblem.exe: BlockProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs
+BlockProblem.exe: BlockProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs CLExt.cs
 	$(CC) $(CFLAGS) $^
 
 .PHONY: clean

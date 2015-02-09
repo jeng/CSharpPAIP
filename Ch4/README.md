@@ -66,6 +66,19 @@ first none nil result:
     CL-USER> (some #'(lambda (x) x) '(nil 2 nil 4 5))
     2
 
+Block Domain
+------------
+
+I've added a Common Lisp Extension class, where I can put extension method that
+cover some of the functions, found in the hyperspec, that don't have an explicit
+definition in .NET.
+
+    Print(new List<string>(){"abc", "ABC", "aBc", "xyz", "XYZ"}.CountIf(x => x == x.ToUpper())); 
+    2
+
+`CountIf` could easily be rewritten as `Where(x => x == x.ToUpper()).Count()`.  I
+still have decided which one has a clearer meaning.
+
 Exercises
 ---------
 
