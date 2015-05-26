@@ -72,9 +72,6 @@ public class GPS
         Func<OpAction, bool> AchieveClosure = 
             (goal => 
                 { 
-                    Console.WriteLine(String.Format("testing: {0}", goal));
-                    foreach(var s in goalStack)
-                        Console.WriteLine(String.Format("testing: {0}", s));
                     currentState = Achieve(currentState, goal, goalStack); 
                     return currentState != null;
                 });
