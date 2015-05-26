@@ -13,11 +13,11 @@ C# doesn't have a read specific for list.  I'm going to use a simple regex to pa
 
 The patterns will change slightly from 
 
-  Pattern: (i need a X)
-  Response: (what would it mean to you if you got a X ?)
+    Pattern: (i need a X)
+    Response: (what would it mean to you if you got a X ?)
 
 to regular expressions
 
-  Pattern: "i need a (\w+)"
-  Response: "what would it mean to you if you got a \1?"
+    Pattern: "i need a (\w+)"
+    Response: "what would it mean to you if you got a \1?"
 
