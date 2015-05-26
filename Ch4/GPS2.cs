@@ -72,6 +72,9 @@ public class GPS
         Func<OpAction, bool> AchieveClosure = 
             (goal => 
                 { 
+                    Console.WriteLine(String.Format("testing: {0}", goal));
+                    foreach(var s in goalStack)
+                        Console.WriteLine(String.Format("testing: {0}", s));
                     currentState = Achieve(currentState, goal, goalStack); 
                     return currentState != null;
                 });
@@ -105,13 +108,17 @@ public class GPS
 
     private List<OpAction> ApplyOp(List<OpAction> state, OpAction goal, Op op, List<OpAction> goalStack)
     {
-        TraceIndent(string.Format("Consider: {0}", goal.Name), goalStack.Count());
+        TraceIndent(string.Format("Consider: {0}", op.Action), goalStack.Count());
+        //If we already optained the goal then just exit
+        //if (state.Exists(x => x == goal
+        foreach(var s in goalStack)
+            TraceIndent(string.Format("GOAL TEST: {0}", s), goalStack.Count());
 
         List<OpAction> tempGoalState = new List<OpAction>(goalStack);
         tempGoalState.Insert(0, goal);
 
         List<OpAction> state2 = AchieveAll(state, op.Preconds, tempGoalState);
-
+        
         if (state2 != null)
         {
             TraceIndent(string.Format("Action: {0}", goal.Name), goalStack.Count());

@@ -147,6 +147,14 @@ public static class GeneralProblemSolver
                     oal("a on b", "b on c", "c on table", "space on a", "space on table"),
                     oal("c on b", "b on a")));
 
+        //Sussman Anomaly
+        var SussmanStart = oal("c on a", "a on table", "b on table", "space on c",
+                "space on b", "space on table");
+        PrintSolution(gps.Solve(SussmanStart,
+                    oal("a on b", "b on c")));
+        PrintSolution(gps.Solve(SussmanStart,
+                    oal("b on c", "a on b")));
+
         return 0;
     }
 }

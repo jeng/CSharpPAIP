@@ -4,7 +4,7 @@ CC = dmcs
 
 exes = GeneralProblemSolver.exe GeneralProblemSolverV2.exe \
 	   MonkeyProblem.exe MazeProblem.exe StackPermute.exe \
-	   Permute.exe BlockProblem.exe
+	   Permute.exe BlockProblem.exe DessertProblem.exe
 
 all: $(exes)
 
@@ -28,6 +28,10 @@ Permute.exe: Permute.cs
 
 BlockProblem.exe: BlockProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs CLExt.cs
 	$(CC) $(CFLAGS) $^
+
+DessertProblem.exe: DessertProblem.cs GPS2.cs Op2.cs OpAction.cs ActionState.cs CLExt.cs
+	$(CC) $(CFLAGS) $^
+
 
 .PHONY: clean
 clean:

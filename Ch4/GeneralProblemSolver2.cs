@@ -24,50 +24,57 @@ public static class GeneralProblemSolver
         }
         return ol;
     }
-
+/*
     public static List<OpAction> addList(params string [] elems)
     {
         var ol = oal(elems);
         ol[0].State = ActionState.Executing;
         return ol;
     }
-
+*/
 
     static List<Op> schoolOps = new List<Op>(){
+            //The not looking after you don't leap problem
+            //Comment this out and turn on tracing to see the issue
+            // new Op(){
+            //     Action   = "taxi-son-to-school",
+            //     Preconds = oal("son-at-home", "have-money"),
+            //     AddList  = oal("son-at-school"),
+            //     DelList  = oal("son-at-home", "have-money")},
             new Op(){ 
                 Action   = "drive-son-to-school",
                 Preconds = oal("son-at-home", "car-works"),
-                AddList  = addList("drive-son-to-school", "son-at-school"),
+                AddList  = oal("son-at-school"),
                 DelList  = oal("son-at-home")},
             new Op(){ 
                 Action   = "shop-installs-battery",
                 Preconds = oal("car-needs-battery", "shop-knows-problem", "shop-has-money"),
-                AddList  = addList("shop-installs-battery", "car-works"),
+                AddList  = oal("car-works"),
                 DelList  = oal()},
             new Op(){ 
                 Action   = "tell-shop-problem",
                 Preconds = oal("in-communication-with-shop"),
-                AddList  = addList("tell-shop-problem", "shop-knows-problem"),
+                AddList  = oal("shop-knows-problem"),
                 DelList  = oal()},
             new Op(){ 
                 Action   = "telephone-shop",
                 Preconds = oal("know-phone-number"),
-                AddList  = addList("telephone-shop", "in-communication-with-shop"),
+                AddList  = oal("in-communication-with-shop"),
                 DelList  = oal()},
             new Op(){ 
                 Action   = "look-up-number",
                 Preconds = oal("have-phone-book"),
-                AddList  = addList("look-up-number", "know-phone-number"),
+                AddList  = oal("know-phone-number"),
                 DelList  = oal()},
             new Op(){ 
                 Action   = "give-shop-money",
                 Preconds = oal("have-money"),
-                AddList  = addList("give-shop-money", "shop-has-money"),
+                AddList  = oal("shop-has-money"),
                 DelList  = oal("have-money")},
             new Op(){
                 Action   = "ask-phone-number",
                 Preconds = oal("in-communication-with-shop"),
-                AddList  = addList("ask-phone-number", "know-phone-number"),
+                AddList  = oal("know-phone-number"),
                 DelList  = oal()}
     };
 
@@ -78,14 +85,26 @@ public static class GeneralProblemSolver
         else
             foreach(var s in solution)
                 Print(s);
-     }
+    }
+
+    private static Op ConvertOp(Op op)
+    {
+        if (op.DelList == null)
+            op.DelList = oal();
+
+        if (op.AddList.First().State != ActionState.Executing)
+            op.AddList.Insert(0, new OpAction(){Name = op.Action, State = ActionState.Executing});
+
+        return op;
+    }
+
 
 
     public static int Main(string [] args)
     {
         Trace.Listeners.Add(new ConsoleTraceListener()); 
 
-        var gps = new GPS(schoolOps);
+        var gps = new GPS(schoolOps.Select(ConvertOp).ToList());
         PrintSolution(gps.Solve(
                 oal("son-at-home", "car-needs-battery", "have-money", "have-phone-book"),
                 oal("son-at-school")));
@@ -114,6 +133,11 @@ public static class GeneralProblemSolver
                 oal("son-at-school")));
         Print("");
 
+
+        //Test the Taxi Problem
+        PrintSolution(gps.Solve(
+                    oal("son-at-home", "have-money", "car-works"),
+                    oal("son-at-school", "have-money")));
 
         return 0;
     }
