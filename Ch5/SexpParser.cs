@@ -1,6 +1,4 @@
-//Create a list of atoms from an sexp
-//This parser is dump, It doesn't know the difference atom 
-//list and a function list
+//A very basic s-expression parser
 using System.Collections.Generic;
 
 namespace SExp

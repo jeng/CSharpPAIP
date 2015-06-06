@@ -1,0 +1,40 @@
+new LookupPattern(
+    @".*hello ?(.*)",
+    @"How do you do.  Please state your problem."),
+new LookupPattern(
+    @".*i need a (.*)",
+    @"What would it mean to you if you got a \1"),
+new LookupPattern(
+    @".*i want (.*)",
+    @"What would it mean to you if you got \1?",
+    @"Why do you want \1?",
+    @"Suppose you got \1 soon?"),
+new LookupPattern(
+    @".*if (.*)",
+    @"Do you really think its likely that \1",
+    @"Do you wish that \1?",
+    @"What do you think about \1?",
+    @"Really-- if \1"),
+new LookupPattern(
+    @".*no($| .*)",
+    @"Why not?",
+    @"You are being a bit negative",
+    @"Are you saying ""NO"" just to be negative"),
+new LookupPattern(
+    @".*I was (.*)",
+    @"Where you really?",
+    @"Perhaps I already knew you were \1.",
+    @"Why do you tell me you were \1 now?"),
+new LookupPattern(
+    @".*I (?:.*)feel (.*)",
+    @"Do you often feel \1?"),
+new LookupPattern(
+    @".*I felt (.*)",
+    @"What other feelings do you have?"),
+new LookupPattern(
+    @"(.*)",
+    @"\1?",
+    @"Interesting.",
+    @"Please continue?",
+    @"Can you elaborate?")
+ 
