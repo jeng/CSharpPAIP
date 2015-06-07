@@ -14,3 +14,4 @@ just how extensible the language is.
 - Chapter 2 is a simple lisp program.  Generate random English sentences 
 - Chapter 3 all about lisp, mainly skipping this one.
 - Chapter 4 general problem solving.  This chapter has one of my favorite quotes "If the program was that complicated, it *must* do something important." 
+- Chapter 5 pattern matching, Eliza.

@@ -38,7 +38,7 @@ It still has funny output sometimes:
 
 Bonus Program!
 --------------
-SEXP's with more Atoms!  I added a sexpression parser that considers every item or a list an atom. It was used to parse the definition list from [Dr. Norvig's](http://norvig.com/paip/eliza.lisp) site into the C# definitions.
+SEXP's with more Atoms!  I added a sexpression parser that considers every item of a list an atom. It was used to parse the definition list from [Dr. Norvig's](http://norvig.com/paip/eliza.lisp) site into the C# definitions.
 
 This:
 
