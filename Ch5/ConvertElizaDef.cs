@@ -10,7 +10,7 @@
 //    (What in the present situation reminds you of ?y)
 //    (What is the connection between me and ?y))
 //
-// Well become:
+// Becomes:
 //   new LookupPattern(
 //    @"(.*) I remember (.*)",
 //    @"Do you often think of \2",
