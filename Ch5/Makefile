@@ -12,7 +12,7 @@ Eliza.exe: Eliza.cs SimpleIO.cs
 ConvertElizaDef.exe: ConvertElizaDef.cs SexpParser.cs
 	$(CC) $(CFLAGS) $^ -out:$@
 
-ElizaPM.exe: ElizaPM.cs SimpleIO.cs
+ElizaPM.exe: ElizaPM.cs SimpleIO.cs SentenceParser.cs
 	$(CC) $(CFLAGS) $^ -out:$@
 
 .PHONY: clean

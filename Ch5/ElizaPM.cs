@@ -10,6 +10,7 @@ using io = SimpleIO.SimpleIO;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Linq;
+//using SentenceParser;
 
 public static class ElizaPM
 {
@@ -131,33 +132,43 @@ public static class ElizaPM
     public static int Main(string [] args)
     {
        //io.Reader(ProcessLine);
-       io.Print("Match: {0}", SimpleEqual(new StringCollection(){"one", "two", "three"},
-                                          new StringCollection(){"One", "twO", "tHREE"}));
-       io.Print("Match: {0}", SimpleEqual(new StringCollection(){"1", "two", "three"},
-                                          new StringCollection(){"One", "twO", "tHREE"}));
-       io.Print("Match: {0}", SimpleEqual(new StringCollection(){"1", "two", "three"},
-                                          new StringCollection(){"twO", "tHREE"}));
+       var inputParser = new SentenceParser();
+       io.Print("Match: {0}", SimpleEqual(inputParser.Parse("one two three"),
+                                          inputParser.Parse("one  two,   thReE")));
+       io.Print("Match: {0}", SimpleEqual(inputParser.Parse("1 two three"),
+                                          inputParser.Parse("one  two,   thReE")));
+       io.Print("Match: {0}", SimpleEqual(inputParser.Parse("one two three"),
+                                          inputParser.Parse("two thReE")));
+
        io.Print("IsVariable {0}", IsVariable("?"));
        io.Print("IsVariable {0}", IsVariable("?x"));
        io.Print("IsVariable {0}", IsVariable("?y"));
 
-       io.Print("PatMatch: {0}", PatMatch(new StringCollection(){"One", "?x", "three"},
-                                          new StringCollection(){"One", "twO", "tHREE"}));
-       io.Print("PatMatch: {0}", PatMatch(new StringCollection(){"One", "?x", "?y"},
-                                          new StringCollection(){"One", "twO", "tHREE"}));
-       io.Print("PatMatch: {0}", PatMatch(new StringCollection(){"One", "?x", "bark"},
-                                          new StringCollection(){"One", "twO", "tHREE"}));
-       io.Print("PatMatch: {0}", PatMatch(new StringCollection(){"One", "?x", "?x"},
-                                          new StringCollection(){"One", "twO", "two"}));
-       io.Print("PatMatch: {0}", PatMatch(new StringCollection(){"One", "?x", "?x"},
-                                          new StringCollection(){"One", "twO", "tHREE"}));
-       io.Print("PatMatch: {0}", PatMatch(new StringCollection(){"One", "two", "three"},
-                                          new StringCollection(){"One", "two", "tHREE"}));
+       io.Print("PatMatch: {0}", PatMatch(inputParser.Parse("One ?x three"),
+                                          inputParser.Parse("One twO tHREE")));
+       io.Print("PatMatch: {0}", PatMatch(inputParser.Parse("One ?x ?y"),
+                                          inputParser.Parse("One twO tHREE")));
+       io.Print("PatMatch: {0}", PatMatch(inputParser.Parse("One ?x bark"),
+                                          inputParser.Parse("One twO tHREE")));
+       io.Print("PatMatch: {0}", PatMatch(inputParser.Parse("One ?x ?x"),
+                                          inputParser.Parse("One twO two")));
+       io.Print("PatMatch: {0}", PatMatch(inputParser.Parse("One ?x ?x"),
+                                          inputParser.Parse("One twO tHREE")));
+       io.Print("PatMatch: {0}", PatMatch(inputParser.Parse("One two three"),
+                                          inputParser.Parse("One two tHREE")));
 
-       io.Print(Response(Substitute(PatMatch(new StringCollection(){"I", "need", "a", "?x"},
-                                    new StringCollection(){"I", "need", "a", "vacation"}),
-                           new StringCollection(){"What", "would", "it", "mean", "if", "you",
-                                                  "got", "a", "vacation", "?"})));
+       io.Print(Response(Substitute(
+                            PatMatch(inputParser.Parse("I need a ?x"),
+                                     inputParser.Parse("I need a vacation")),
+                            inputParser.Parse("What would it mean if you got a vacation ?"))));
+
+       io.Print("== Parser Test ==");
+       var sp = new SentenceParser();
+       var res = sp.Parse("this is a (?* ?x) words un-words, year;; " + 
+                          "\"this is \"foo\" in quotes\"( foo (xs 45) bar)?x"+
+                          "...Stuff after the right paren");
+       foreach(var x in res)
+           io.Print(x);
                                     
        return 1;
     }
